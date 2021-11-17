@@ -1,6 +1,13 @@
 data/*.csv
 conf/local/**
 .DS_STORE
+conf/.DS_STORE
+data/.DS_STORE
+notebooks/.DS_STORE
+scripts/.DS_STORE
+sql/.DS_STORE
+src/.DS_STORE
+tmp/.DS_STORE
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
