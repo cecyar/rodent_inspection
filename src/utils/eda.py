@@ -704,8 +704,8 @@ def genera_profiling_de_texto(df,lista_texto,vars_type):
         >>profiling_de_texto = genera_profiling_de_texto(df,lista_texto,vars_type)
     """
     # Obtenemos los estadísticos de la columna si es catagorica
-    lista_perfilamiento_txt = ['Tipo','Número de observaciones', 'Observaciones únicas', '% Observaciones únicas',
-                                    'Tamaño promedio','Tamaño mínimo','Tamaño máximo']
+    lista_perfilamiento_txt = ['Tipo','Número de observaciones', 'Observaciones únicas', '% Observaciones únicas', 
+                           'Observaciones nulas', '% Observaciones nulas', 'Tamaño promedio','Tamaño mínimo','Tamaño máximo']
     datos_dataframe_profiling_txt = {'Métrica':lista_perfilamiento_txt}
     dataframe_profiling_txt = pd.DataFrame(data=datos_dataframe_profiling_txt)
     for col in lista_texto:
@@ -728,8 +728,14 @@ def genera_profiling_de_texto(df,lista_texto,vars_type):
         #Observaciones unicas
         num_obs_unicas=df[col].nunique()
 
-        #%Observaciones nulas
+        #%Observaciones unicas
         por_obs_unicas=num_obs_unicas/num_observaciones
+
+        #Valores nulos
+        num_obs_nulas=df[col].isna().sum()
+
+        #%Valores nulos
+        por_obs_nulas=num_obs_nulas/num_observaciones
 
         #%Tamaño promedio
         tam_prom=df[col].str.len().mean()
@@ -743,7 +749,7 @@ def genera_profiling_de_texto(df,lista_texto,vars_type):
         tam_max=df[col].str.len().max()
         #tam_max=agua[col].apply(len).max()
 
-        datos_variable = [tipo_dato,num_observaciones,num_obs_unicas,por_obs_unicas,tam_prom,tam_min,tam_max]
+        datos_variable = [tipo_dato,num_observaciones,num_obs_unicas,por_obs_unicas,num_obs_nulas,por_obs_nulas,tam_prom,tam_min,tam_max]
         dataframe_profiling_txt[col]=datos_variable
     return dataframe_profiling_txt
 
