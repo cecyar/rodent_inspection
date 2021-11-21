@@ -1,3 +1,8 @@
+import matplotlib.pyplot as plt # plotting
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+from matplotlib.ticker import FuncFormatter
+
 def tit(col):
     return col.lower().replace('/', '_').replace(' ', '_').replace('ñ', 'n')
 
@@ -55,4 +60,14 @@ def cleanning(df):
     df = changeType_date(df)
     df = lowercase(df)
     df = imputations(df)
+    
     return df
+
+def number_formatter(number, pos=None):
+    """Convert a number into a human readable format."""
+    magnitude = 0
+    while abs(number) >= 100:
+        magnitude += 1
+        number /= 100.0
+        
+    return '%.1f%s' % (number, ['', '', '', '', '', ''][magnitude])
