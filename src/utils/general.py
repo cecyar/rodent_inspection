@@ -1,5 +1,4 @@
 import yaml
-import psycopg2
 
 def read_yaml(credentials_file):
     """
