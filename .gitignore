@@ -8,6 +8,7 @@ scripts/.DS_Store
 sql/.DS_Store
 src/.DS_Store
 tmp/.DS_Store
+src/utils/migrations
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

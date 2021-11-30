@@ -3,7 +3,9 @@ FROM python:3.9.7-alpine
 RUN apk update && apk add python3-dev \
                         gcc \
                         libc-dev \
-                        g++
+                        g++ \
+                        postgresql-dev \
+                        musl-dev
 
 WORKDIR /app
 
