@@ -23,6 +23,7 @@ services:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=rodent
 
+
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -32,4 +33,3 @@ services:
       - "8000:80"
     depends_on:
       - db
-

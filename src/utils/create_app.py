@@ -1,6 +1,6 @@
 from flask import Flask
-
 from flask_migrate import Migrate
+
 from config import SQLALCHEMY_DATABASE_URI
 from models import db
 
