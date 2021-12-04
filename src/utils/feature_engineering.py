@@ -7,9 +7,9 @@ class FeatureEngineering():
   
     def feature_engineering(self):
         self.dataframe = self.dataframe.dropna()
-        columns_to_drop = ["JOB_TICKET_OR_WORK_ORDER_ID","JOB_PROGRESS","BBL","BLOCK","LOT","HOUSE_NUMBER","STREET_NAME","X_COORD","Y_COORD","BOROUGH","LOCATION","APPROVED_DATE"]
+        columns_to_drop = ["JOB_PROGRESS","BBL","BLOCK","LOT","HOUSE_NUMBER","STREET_NAME","X_COORD","Y_COORD","BOROUGH","LOCATION","APPROVED_DATE"]
         self.dataframe = self.dataframe.drop(columns_to_drop,axis=1)
-        self.dataframe.columns = ["Ins_type","job_id","boro_code","zc","lat","long","ins_date","result"]
+        self.dataframe.columns = ["Ins_type","job_ticket","job_id","boro_code","zc","lat","long","ins_date","result"]
         self.dataframe = self.dataframe.drop(self.dataframe[self.dataframe.lat < 30].index)
         self.dataframe.drop_duplicates()
         def conditions(s):
