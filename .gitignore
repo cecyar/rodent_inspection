@@ -11,6 +11,8 @@ tmp/.DS_Store
 src/utils/migrations/
 src/utils/migrations/**
 src/utils/*.yaml
+.idea/**
+src/utils/Rodent_Inspection.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

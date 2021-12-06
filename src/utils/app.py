@@ -34,7 +34,7 @@ def home():
                    'NULL,latitude float DEFAULT NULL,longitude float DEFAULT NULL,inspection_date varchar DEFAULT '
                    'NULL,result varchar DEFAULT NULL)')
 
-    with open('test.csv', 'r') as f:
+    with open('Rodent_Inspection.csv', 'r') as f:
         reader = csv.reader(f)
         columns = next(reader)
         cursor.execute("SELECT * FROM api_model")
