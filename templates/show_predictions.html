@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Mostrar registros</title>
+    <title>Mostrar predicciones</title>
 </head>
 <p><img src="http://escolar.itam.mx/centro_tesis/img/Logo_Membrete_ITAM.png" alt="logo" width="200"/></p>
 <html>
     <body style="background-color:white;">
-        <h1 style="text-align: center;"><span style="color: #008000;"><strong>Rodent Inspection Database</strong></span></h1>
+        <h1 style="text-align: center;"><span style="color: #008000;"><strong>Rodent Inspection: Predictions Database</strong></span></h1>
     </body>
 </html>
 
@@ -23,15 +23,17 @@
 <table>
   <thead>
     <tr>
-        <th>Job ticket or work order id</th>
         <th>Job ID</th>
-        <th>Inspection type</th>
-        <th>Borough code</th>
-        <th>Zip code</th>
+        <th>Borough Code</th>
+        <th>Zip Code</th>
         <th>Latitude</th>
         <th>Longitude</th>
-        <th>Inspection date</th>
-        <th>Result</th>
+        <th>INSP Bait</th>
+        <th>INSP Cleanup</th>
+        <th>INSP Compliance</th>
+        <th>INSP Initial</th>
+        <th>INSP Stoppage</th>
+        <th>Predicted label</th>
     </tr>
     </thead>
     <tbody>
@@ -46,6 +48,8 @@
                 <td>{{row[6]}}</td>
                 <td>{{row[7]}}</td>
                 <td>{{row[8]}}</td>
+                <td>{{row[9]}}</td>
+                <td>{{row[10]}}</td>
             </tr>
         {% endfor %}
     </tbody>

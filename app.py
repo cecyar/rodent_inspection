@@ -31,18 +31,40 @@ cursor.execute('CREATE TABLE all_info ('
                'inspection_date varchar DEFAULT NULL,'
                'result varchar DEFAULT NULL)')
 
-with open('data/test.csv', 'r') as f:   # with open('data/Rodent_Inspection.csv', 'r') as f:
+with open('data/Rodent_Inspection.csv', 'r') as f:
     reader_all = csv.reader(f)
     columns = next(reader_all)
     cursor.execute("SELECT * FROM all_info")
     datos = cursor.fetchall()
     query = 'insert into all_info({0}) values ({1})'
     query = query.format(','.join(columns), ','.join(['%s'] * len(columns)))
+    n = 0
     for data in reader_all:
+        if n == 20:
+            break
+        n += 1
         cursor.execute(query, data)
-    cursor.execute("SELECT * FROM all_info")
+    cursor.execute("SELECT * FROM all_info limit 20")
     datos = cursor.fetchall()
     conn.commit()
+
+
+# Crea base de datos para predicciones
+tbl1 = "predicted_results"
+cursor.execute('DROP TABLE IF EXISTS predicted_results')
+cursor.execute('CREATE TABLE predicted_results ('
+               'job_id varchar DEFAULT NULL,'
+               'boro_code integer DEFAULT NULL,'
+               'zip_code integer DEFAULT NULL,'
+               'latitude float DEFAULT NULL,'
+               'longitude float DEFAULT NULL,'
+               'bait integer DEFAULT NULL,'
+               'cleanup integer DEFAULT NULL,'
+               'compliance integer DEFAULT NULL,'
+               'initial integer DEFAULT NULL,'
+               'stoppage integer DEFAULT NULL,'
+               'predicted_label integer DEFAULT NULL)')
+conn.commit()
 
 
 # Cargar Modelo para predicciones
@@ -80,12 +102,41 @@ def predict():
                              request.form['zip_code'],
                              request.form['latitude'],
                              request.form['longitude'],
-                             request.form['1'],
-                             request.form['2'],
-                             request.form['3'],
-                             request.form['4'],
-                             request.form['5']]).reshape(-1, 1).T
+                             request.form['bait'],
+                             request.form['cleanup'],
+                             request.form['compliance'],
+                             request.form['initial'],
+                             request.form['stoppage']]).reshape(-1, 1).T
     res_val = model_loaded.predict(array_inputs)
+
+    # Guarda en tabla predicted_results
+    cursor.execute("INSERT INTO predicted_results ("
+                   "job_id,"
+                   "boro_code,"
+                   "zip_code,"
+                   "latitude,"
+                   "longitude,"
+                   "bait,"
+                   "cleanup,"
+                   "compliance,"
+                   "initial,"
+                   "stoppage,"
+                   "predicted_label) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                   (array_inputs.tolist()[0][0],
+                    array_inputs.tolist()[0][1],
+                    array_inputs.tolist()[0][2],
+                    array_inputs.tolist()[0][3],
+                    array_inputs.tolist()[0][4],
+                    array_inputs.tolist()[0][5],
+                    array_inputs.tolist()[0][6],
+                    array_inputs.tolist()[0][7],
+                    array_inputs.tolist()[0][8],
+                    array_inputs.tolist()[0][9],
+                    res_val.tolist()[0]), )
+    cursor.execute("SELECT * FROM predicted_results")
+    results = cursor.fetchall()
+    conn.commit()
+
     return render_template('prediction.html', triptype_val=res_val)
 
 
@@ -130,7 +181,18 @@ def add_register():
     results = cursor.fetchall()
     conn.commit()
     res_val = array_inputs
+
     return render_template('add_register.html', triptype_val=res_val)
+
+
+# Mostrar resultados de las predicciones
+@app.route('/show_predictions', methods=['GET'])
+def show_predictions():
+    cursor.execute("SELECT * FROM predicted_results")
+    results = cursor.fetchall()
+    conn.commit()
+
+    return render_template('show_predictions.html', data=results)
 
 
 if __name__ == "__main__":
