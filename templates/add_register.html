@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar registro</title>
+</head>
+
+<html>
+    <body style="background-color:white;">
+        <p><img src="http://escolar.itam.mx/centro_tesis/img/Logo_Membrete_ITAM.png" alt="logo" width="200"/></p>
+        <h1 style="text-align: center;"><span style="color: #008000;"><strong>Rodent Inspection: Add Register</strong></span></h1>
+        <h3> Para agregar un nuevo registro, por favor ingresa los siguientes datos (todos los campos son requeridos). Al final da click en SUBMIT </h3>
+    </body>
+</html>
+
+<form action="{{ url_for('get_data') }}" method="POST">
+    <br> job_ticket_or_work_order_id:
+    <input name="job_ticket_or_work_order_id" value=0 type="text" required>
+    <br>
+    <br> job_id:
+    <input name="job_id" value=0 type="text" required>
+    <br>
+    <br> inspection_type:
+    <input name="inspection_type" value=0 type="text" required>
+    <br>
+    <br> boro_code:
+    <input name="boro_code" value=0 type="number" min="1" max="5" required>
+    <br>
+    <br> zip_code:
+    <input name="zip_code" value=0 type="number" min="10001" max="11220" required>
+    <br>
+    <br> latitude:
+    <input name="latitude" value=0 type="number" min="40.49" max="40.92" required>
+    <br>
+    <br> longitude:
+    <input name="longitude" value=0 type="number" min="-79.47" max="-73.68" required>
+    <br>
+    <br> inspection_date:
+    <input name="inspection_date" value=0 type="text" required>
+    <br>
+    <br> result:
+    <input name="result" value=0 type="text" required>
+    <br>
+    <br>
+    <input type="submit">
+</form>
+
+<html>
+    <div class="triptype_val" align="center">
+        <p style="color:#800000;font-size:23px">Se agregó el siguiente registro:</p>
+        <p style="color:red;font-size:20px">{{ triptype_val }}</p>
+    </div>
+
+<p align="right"><a href=main ><button class=grey style="height:25px;width:100px">Back to main</button></a></p>
+
+</html>

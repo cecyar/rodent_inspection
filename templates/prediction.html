@@ -2,12 +2,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Prediction</title>
+    <title>Hacer predicción</title>
 </head>
 
 <html>
     <body style="background-color:white;">
-        <h1 style="text-align: center;"><span style="color: #008000;"><strong>Rodent Inspection Prediction</strong></span></h1>
+        <p><img src="http://escolar.itam.mx/centro_tesis/img/Logo_Membrete_ITAM.png" alt="logo" width="200"/></p>
+        <h1 style="text-align: center;"><span style="color: #008000;"><strong>Rodent Inspection: Prediction</strong></span></h1>
         <h3> Para hacer una predicción, por favor ingresa los siguientes datos (todos los campos son requeridos), al final da click en SUBMIT </h3>
     </body>
 </html>
@@ -20,16 +21,16 @@
         <input name="job_id" value=0 type="text" required>
         <br>
         <br> Borough Code:
-        <input name="boro_code" value=0 type="number" min="1" max="9" required>
+        <input name="boro_code" value=0 type="number" min="1" max="5" required>
         <br>
         <br> Zip Code:
-        <input name="zip_code" value=0 type="number" min="10001" max="11697" required>
+        <input name="zip_code" value=0 type="number" min="10001" max="11220" required>
         <br>
         <br> Latitude:
-        <input name="latitude" value=0 type="number" min="-18.91" max="40.91" required>
+        <input name="latitude" value=0 type="number" min="40.49" max="40.92" required>
         <br>
         <br> Longitude:
-        <input name="longitude" value=0 type="number" min="-79.47" max="0" required>
+        <input name="longitude" value=0 type="number" min="-74.27" max="-73.68" required>
         <br>
         <br>
         <!-- <fieldset>
@@ -64,8 +65,10 @@
 
 <html>
     <div class="triptype_val" align="center">
-        <br>
-        <p style="color:#000080;font-size:23px">El resultado de la predicción para el registro ingresado es:</p>
+        <p style="color:#800000;font-size:23px">El resultado de la predicción para el registro ingresado es:</p>
         <p style="color:red;font-size:37px">{{ triptype_val }}</p>
     </div>
+
+<p align="right"><a href=main ><button class=grey style="height:25px;width:100px">Back to main</button></a></p>
+
 </html>
