@@ -22,24 +22,24 @@ def home():
     """
     Function to upload csv file to sqlserver and show on api
     """
-    tbl = "api_model"
+    tbl = "all_info"
     cursor = conn.cursor()
-    cursor.execute('DROP TABLE IF EXISTS api_model')
-    cursor.execute('CREATE TABLE api_model (job_ticket_or_work_order_id integer DEFAULT NULL,job_id varchar DEFAULT '
+    cursor.execute('DROP TABLE IF EXISTS all_info')
+    cursor.execute('CREATE TABLE all_info (job_ticket_or_work_order_id integer DEFAULT NULL,job_id varchar DEFAULT '
                    'NULL,inspection_type varchar DEFAULT NULL,boro_code integer DEFAULT NULL,zip_code integer DEFAULT '
                    'NULL,latitude float DEFAULT NULL,longitude float DEFAULT NULL,inspection_date varchar DEFAULT '
                    'NULL,result varchar DEFAULT NULL)')
 
-    with open('Rodent_Inspection.csv', 'r') as f:
+    with open('data/test.csv', 'r') as f:   #with open('data/Rodent_Inspection.csv', 'r') as f:
         reader = csv.reader(f)
         columns = next(reader)
-        cursor.execute("SELECT * FROM api_model")
+        cursor.execute("SELECT * FROM all_info")
         datos = cursor.fetchall()
-        query = 'insert into api_model({0}) values ({1})'
+        query = 'insert into all_info({0}) values ({1})'
         query = query.format(','.join(columns), ','.join(['%s'] * len(columns)))
         for data in reader:
             cursor.execute(query, data)
-        cursor.execute("SELECT * FROM api_model")
+        cursor.execute("SELECT * FROM all_info")
         datos = cursor.fetchall()
         conn.commit()
 
@@ -47,7 +47,7 @@ def home():
 
 
 # Cargar Modelo
-with open("entrenamiento_lr.pkl", "rb") as f:
+with open("data/entrenamiento_lr.pkl", "rb") as f:
     model_loaded = pickle.load(f)
 
 

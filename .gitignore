@@ -1,5 +1,6 @@
 data/*.csv
 conf/local/**
+conf/**
 .DS_Store
 conf/.DS_Store
 data/.DS_Store
@@ -11,8 +12,9 @@ tmp/.DS_Store
 src/utils/migrations/
 src/utils/migrations/**
 src/utils/*.yaml
+.idea/
 .idea/**
-src/utils/Rodent_Inspection.csv
+src/Rodent_Inspection.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

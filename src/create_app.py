@@ -12,4 +12,3 @@ def create_app():
     migrate = Migrate(app, db)
     migrate.init_app(app, db)
     return app
-

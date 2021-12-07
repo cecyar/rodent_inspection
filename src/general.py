@@ -33,29 +33,3 @@ def get_api_token(credentials_file):
     token = read_yaml(credentials_file)['rodent_inspections']
 
     return token
-
-
-def get_db_conn_sql_alchemy(credenciales):
-    """Get credentials for db connection"""
-    creds = read_yaml(credenciales)['db']
-
-    connection = "postgresql://{}:{}@{}:{}/{}".format(creds['user'], creds['pass'], creds['host'], creds['port'],
-                                                      creds['db'])
-
-    return connection
-
-
-def get_db_conn_psycopg(credentials_file):
-    """
-    """
-    creds = read_yaml(credentials_file)['db']
-
-    connection = psycopg2.connect(
-        user=creds['user'],
-        password=creds['pass'],
-        host=creds['host'],
-        port=creds['port'],
-        database=creds['db']
-    )
-
-    return connection

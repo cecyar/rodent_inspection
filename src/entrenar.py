@@ -14,6 +14,7 @@ from time import time
 import pandas as pd
 import pickle
 
+
 class MLModeling():
     def __init__(self, dataframe):
         self.dataframe = dataframe
