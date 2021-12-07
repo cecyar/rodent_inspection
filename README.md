@@ -13,7 +13,7 @@
 | Leonardo Ceja Pérez              | 197818 | lcejaper@itam.mx   | lecepe00   |
 
 ## Pregunta analítica a contestar
-¿Pasará una propiedad una inspección de ratas o no?  Entiéndase, ¿se encontrarán ratas en dicha propiedad?
+¿Pasará una propiedad una inspección de ratas o no?  En otras palabras, ¿se encontrarán ratas en dicha propiedad?
 
 El modelo consiste en una clasificación binaria con las siguientes etiquetas:
 
@@ -39,14 +39,35 @@ Para ejecutar este producto de datos se necesita lo siguiente:
       1. awk -f src/clean_data.awk < data/rodent.csv
       2. sed -r '/(^|,)\s*(,|$)/d' data/rodent_reduced.csv > data/Rodent_Inspection.csv
 3. Construir la imagen de docker:  
-   1. En la raíz del repositorio, ejecutar estos 2 comandos en la terminal (te pedirá la contraseña de tu usuario de tu computadora):
+   1. En la raíz del repositorio, ejecutar estos 2 comandos en la terminal (se necesitará ingresar la contraseña del usuario de la computadora donde se está trabajando):
       1. make build
       2. make up
-4. Para visualizar la tabla generada de la base de datos:  
-   1. Abrir el explorador de internet e ir a la siguiente dirección:
-      1. localhost:5000/home.
-         1. **Nota:**  Debido al tamaño de la tabla (aprox. 196K registros), puede generar errores después de cargar una gran cantidad de filas.  
-5. Para visualizar la base de datos utilizando el servicio de `pgAdmin`:  
+
+**Para acceder a los servicios del producto de datos:**
+1. Abrir el explorador de internet e ir a la siguiente dirección:
+   1. localhost:5000/main
+2. Se accede a la página principal que contiene 4 botones con las siguientes funciones:
+   1. `Mostrar datos`:  Muestra la tabla disponible en la base de datos con el dataset utilizado para entrenar el modelo.  **Nota:**  Debido al tamaño del dataset usado para el entrenamiento (196,000 registros), se muestran solo 20 registros para fines ilustrativos.
+   2. `Realizar predicción`:  Permite realizar una predicción, al ingresar los campos requeridos.
+      1. `Job ID`:  Identificador de la predicción, valor numérico libre.
+      2. `Borough Code`:  Identificador numérico del distrito de Nueva York a inspeccionarse, 5 valores numéricos posibles:
+         1. Manhattan (1)
+         2. Bronx (2)
+         3. Brooklyn (3)
+         4. Queens (4)
+         5. Staten Island (5)
+      3. `Zip Code`:  Código postal donde se realizará la inspección (valor numérico entre 10001 y 11220). 
+      4. `Latitude`:  Latitud donde se realizará la inspección (valor numérico entre 40.49 y 40.92).
+      5. `Longitude`:  Longitud donde se realizará la inspección (valor numérico entre -74.27 y -73.68).
+      6. `Inspection type`:  Tipo de inspección a realizarse, seleccionar alguna de las siguientes opciones:
+         1. Bait
+         2. Clean up
+         3. Compliance
+         4. Initial
+         5. Stoppage
+   2. `Agregar registro`:  Permite agregar observaciones adicionales a la base de datos.
+   3. `Mostrar predicciones`:  Se muestran las predicciones realizadas hasta el momento.
+3. Adicionalmente, se puede visualizar y trabajar con la base de datos utilizando el servicio de `pgAdmin`, para ello, ejecutar lo siguiente:  
    1. Abrir el explorador de internet e ir a la siguiente dirección:
       1. localhost:8000
    2. Después de visualizar la pantalla de bienvenida de `pgAdmin`, ingresar los siguientes datos:
@@ -59,40 +80,22 @@ Para ejecutar este producto de datos se necesita lo siguiente:
          1. Host name:  db
          2. Username:  root
          3. Password:  root
-   5. Encontrarás la tabla `api_model`, que contiene todos los registros de nuestro dataset.
+   5. Estarán disponibles las siguientes tablas:
+      1. `api_model`:  Contiene los registros del dataset de entrenamiento del modelo.
+      2. `predicted_results`:  Contiene las predicciones realizadas.  
+4. Para salir de este producto de datos, ejecutar `Ctrl+C` en la terminal donde se está corriendo la imagen de Docker.
 
-**Entrenamiento del modelo:**
-1. Ejecutar el notebook [Model_rodent.ipynb](https://github.com/cecyar/rodent_inspection/blob/main/notebooks/Model_rodent.ipynb) en la carpeta `notebooks` del repositorio.
-
-**Uso del modelo de predicción:**
-1. En el explorador de internet, ir a la siguiente dirección:
-   1. localhost:5000/prediction
-2. Ingresar los siguientes datos para generar la predicción:
-   1. `Job ID`:  Identificador de la inspección, valor numérico de 7 dígitos.
-   2. `Boro Code`:  Identificador numérico del distrito de Nueva York a inspeccionarse, 5 valores numéricos posibles:
-      1. Manhattan (1)
-      2. Bronx (2)
-      3. Brooklyn (3)
-      4. Queens (4)
-      5. Staten Island (5)
-   3. `Zip Code`:  Código postal donde se realizará la inspección, valor numérico de 5 dígitos.
-   4. `Latitude`:  Latitud donde se realizará la inspección, valor numérico (aprox 48.XXXX para la ciudad de Nueva York).  
-   5. `Longitude`:  Longitud donde se realizará la inspección, valor numérico (aprox -73.XXXX para la ciudad de Nueva York).
-   6. `Inspection type`:  Tipo de inspección a realizarse, seleccionar alguna de las siguientes opciones:
-      1. Bait
-      2. Clean up
-      3. Compliance
-      4. Initial
-      5. Stoppage
-   7. Posteriormente, dar click en el botón `Submit`, y el modelo arrojará la etiqueta predicha.
+**Re-Entrenamiento del modelo:**
+1. Para re-entrenar el modelo es necesario ejecutar el notebook [Model_rodent.ipynb](https://github.com/cecyar/rodent_inspection/blob/main/notebooks/Model_rodent.ipynb) que se encuentra en la carpeta `notebooks` del repositorio.  Para ello, será necesario exportar la base de datos actualizada como archivo `*.csv` y colocarla en la carpeta `data` del repositorio.
+2. Los modelos que se generan en formato `pickle` al ejecutar el notebook, deben colocarse en la carpeta `data` del repositorio.  **Nota:**  Para ejecutar el notebook, es necesario utilizar algún ambiente virtual adicional que contenga `jupyter notebook`.  La imagen de Docker de este producto de datos no contiene `jupyter notebook`.
 
 # EDA
-Puede consultar el [análisis exploratorio de datos](https://github.com/cecyar/rodent_inspection/tree/main/notebooks)
+Se puede consultar el análisis exploratorio de datos en la siguiente carpeta:  [EDA](https://github.com/cecyar/rodent_inspection/tree/main/notebooks/eda)
 
 **Nota:**  Este análisis exploratorio se realizó con el dataset original con los registros al 16 de Noviembre de 2021.  El dataset original cuenta con más de 2 millones de registros.  
 
-Para facilitar la ejecución del producto de datos, el producto de datos utiliza un dataset reducido de aproximadamente 200,000 registros, disponible en el [**Drive**](https://drive.google.com/file/d/1JCXlYAfIUP7xOGPAxS-MUKE1sNXJMWKl/view?usp=sharing) mencionado anteriormente.
+Para facilitar la creación de este producto de datos, se utilizó un dataset reducido de aproximadamente 200,000 registros, disponible en el [**Drive**](https://drive.google.com/file/d/1JCXlYAfIUP7xOGPAxS-MUKE1sNXJMWKl/view?usp=sharing) mencionado anteriormente.
 
 # Entrenamiento
-Puede consultar el entrenamiento del modelo de predicción en el notebook: [Model_rodent.ipynb](https://github.com/cecyar/rodent_inspection/blob/main/notebooks/Model_rodent.ipynb).
+Se puede consultar los detalles del entrenamiento del modelo de predicción en el notebook: [Model_rodent.ipynb](https://github.com/cecyar/rodent_inspection/blob/main/notebooks/Model_rodent.ipynb).
 
