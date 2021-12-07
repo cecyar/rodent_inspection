@@ -1,9 +1,10 @@
 import csv
+import pickle
+import psycopg2
 import psycopg2.extras
+import numpy as np
 from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
-from config import SQLALCHEMY_DATABASE_URI
 
 
 database_uri = "postgresql://root:root@db:5432/rodent"
@@ -14,11 +15,6 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = database_uri     # SQLALCHEMY_DATABASE_URI
 app.config["DEBUG"] = True
 conn = psycopg2.connect(database_uri)
-db = SQLAlchemy(app)
-ma = Marshmallow(app)
-
-
-
 
 
 @app.route('/home', methods=['GET'])
@@ -50,39 +46,31 @@ def home():
     return render_template('home.html', data=datos)
 
 
+# Cargar Modelo
+with open("entrenamiento_lr.pkl", "rb") as f:
+    model_loaded = pickle.load(f)
+
+
+@app.route('/prediction', methods=['GET'])
+def feed_data():
+    return render_template('prediction.html')
+
+
+@app.route('/prediction', methods=['POST'])
+def predict():
+    array_inputs = np.array([request.form['job_id'],
+                             request.form['boro_code'],
+                             request.form['zip_code'],
+                             request.form['latitude'],
+                             request.form['longitude'],
+                             request.form['1'],
+                             request.form['2'],
+                             request.form['3'],
+                             request.form['4'],
+                             request.form['5']]).reshape(-1, 1).T
+    res_val = model_loaded.predict(array_inputs)
+    return render_template('prediction.html', triptype_val=res_val)
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True, port="5000")
-
-
-class Task(db.Model):
-    job_ticket_or_work_order_id = db.Column(db.Integer, primary_key=True)
-    job_id = db.Column(db.Text)
-    inspection_type = db.Column(db.Text)
-    boro_code = db.Column(db.Integer)
-    zip_code = db.Column(db.Integer)
-    latitude = db.Column(db.Float)
-    longitude = db.Column(db.Float)
-    inspection_date = db.Column(db.DateTime)
-    result = db.Column(db.Text)
-
-    def __init__(self, job_id, inspection_type, boro_code, zip_code, latitude, longitude, inspection_date, result):
-        self.job_id = job_id
-        self.inspection_type = inspection_type
-        self.boro_code = boro_code
-        self.zip_code = zip_code
-        self.latitude = latitude
-        self.longitude = longitude
-        self.inspection_date = inspection_date
-        self.result = result
-
-
-db.create_all()
-
-
-class TaskSchema(ma.Schema):
-    class Meta:
-        fields = ("job_ticket_or_work_order_id", "job_id", "inspection_type", "boro_code", "zip_code", "latitude", "longitude", "inspection_date", "result")
-
-
-task_schema = TaskSchema()
-tasks_schema = TaskSchema(many=True)
+    app.run(host="0.0.0.0", debug=True, port=5000)

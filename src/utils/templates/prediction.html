@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction</title>
+</head>
+
+<html>
+    <body style="background-color:white;">
+        <h1 style="text-align: center;"><span style="color: #008000;"><strong>Rodent Inspection Prediction</strong></span></h1>
+        <h3> Para hacer una predicción, por favor ingresa los siguientes datos (todos los campos son requeridos), al final da click en SUBMIT </h3>
+    </body>
+</html>
+
+<form action="{{ url_for('feed_data') }}" method="POST">
+    <!-- <fieldset>
+        <legend style="color: #800000;">Ingresa los datos (todos los campos son requeridos), al final da click en SUBMIT:</legend>
+        <br> -->
+        <br> Job ID:
+        <input name="job_id" value=0 type="text" required>
+        <br>
+        <br> Borough Code:
+        <input name="boro_code" value=0 type="number" min="1" max="9" required>
+        <br>
+        <br> Zip Code:
+        <input name="zip_code" value=0 type="number" min="10001" max="11697" required>
+        <br>
+        <br> Latitude:
+        <input name="latitude" value=0 type="number" min="-18.91" max="40.91" required>
+        <br>
+        <br> Longitude:
+        <input name="longitude" value=0 type="number" min="-79.47" max="0" required>
+        <br>
+        <br>
+        <!-- <fieldset>
+            <legend>Inspection type:</legend>
+            <p><label> <input type="radio" name="1" required value="BAIT"> Bait </label></p>
+            <p><label> <input type="radio" name="2" required value="CLEAN_UPS"> Clean-up </label></p>
+            <p><label> <input type="radio" name="3" required value="COMPLIANCE"> Compliance </label></p>
+            <p><label> <input type="radio" name="4" required value="INITIAL"> Initial </label></p>
+            <p><label> <input type="radio" name="5" required value="STOPPAGE"> Stoppage </label></p>
+        </fieldset> -->
+        <br>
+        <legend style="color: #000080;">Selecciona el "inspection type" colocando un "1" en el tipo adecuado</legend>
+        <br> Bait:
+        <input name="1" type="number" value=0 min="0" max="1" required>
+        <br>
+        <br> Clean-ups:
+        <input name="2" type="number" value=0 min="0" max="1" required>
+        <br>
+        <br> Compliance:
+        <input name="3" type="number" value=0 min="0" max="1" required>
+        <br>
+        <br> Initial:
+        <input name="4" type="number" value=0 min="0" max="1" required>
+        <br>
+        <br> Stoppage:
+        <input name="5" type="number" value=0 min="0" max="1" required>
+        <br>
+        <br>
+        <input type="submit">
+    <!-- </fieldset> -->
+</form>
+
+<html>
+    <div class="triptype_val" align="center">
+        <br>
+        <p style="color:#000080;font-size:23px">El resultado de la predicción para el registro ingresado es:</p>
+        <p style="color:red;font-size:37px">{{ triptype_val }}</p>
+    </div>
+</html>
