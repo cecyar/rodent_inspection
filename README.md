@@ -13,15 +13,15 @@
 | Leonardo Ceja Pérez              | 197818 | lcejaper@itam.mx   | lecepe00   |
 
 ## Pregunta analítica a contestar
-¿Pasará una propiedad una inspección de ratas o no?  Entiéndase, ¿existen ratas en dicha propiedad?
+¿Pasará una propiedad una inspección de ratas o no?  Entiéndase, ¿se encontrarán ratas en dicha propiedad?
 
 El modelo consiste en una clasificación binaria con las siguientes etiquetas:
 
-- `Etiqueta 0:`  La propiedad **SÍ** pasó la inspección de ratas (no se encontraron ratas en la propiedad).
-- `Etiqueta 1:`  La propiedad **NO** pasó la inspección de ratas (sí se encontraron ratas en la propiedad.)
+- `Etiqueta 0:`  La propiedad **SÍ** pasará la inspección de ratas (no se encontrarán ratas en la propiedad).
+- `Etiqueta 1:`  La propiedad **NO** pasará la inspección de ratas (sí se encontrarán ratas en la propiedad.)
 
 # Comprensión del negocio
-Consulte el documento [00_comprension_negocio.md] (https://github.com/cecyar/rodent_inspection/blob/main/00_comprension_negocio.md)
+Consulte el documento [00_comprension_negocio.md](https://github.com/cecyar/rodent_inspection/blob/main/00_comprension_negocio.md)
 
 # Base de datos
 La base de datos que se analizará en este trabajo será la de [Rodent inspection](https://data.cityofnewyork.us/Health/Rodent-Inspection/p937-wjvj) obtenida de [NYC Open Data](https://opendata.cityofnewyork.us/).
@@ -33,7 +33,7 @@ Para ejecutar este producto de datos se necesita lo siguiente:
 - Clonar el repositorio en el equipo.
 
 **Para levantar la imagen de docker y la base de datos:**
-1. Descargar el archivo `Rodent.csv` que está disponible en este [**Drive**](https://drive.google.com/file/d/1JCXlYAfIUP7xOGPAxS-MUKE1sNXJMWKl/view?usp=sharing), y colocarlo en la carpeta `data`del repositorio.
+1. Descargar el archivo `Rodent.csv` que está disponible en este [**Drive**](https://drive.google.com/file/d/1JCXlYAfIUP7xOGPAxS-MUKE1sNXJMWKl/view?usp=sharing), y colocarlo en la carpeta `data` del repositorio.
 2. Limpieza de datos: en la raíz del repositorio, ejecutar estos dos comandos:
    1. awk -f src/utils/clean_data.awk < data/rodent.csv
    2. sed -r '/(^|,)\s*(,|$)/d' data/rodent_reduced.csv > src/utils/Rodent_Inspection.csv
@@ -62,8 +62,8 @@ Para ejecutar este producto de datos se necesita lo siguiente:
       4. Queens (4)
       5. Staten Island (5)
    3. `Zip Code`:  Código postal donde se realizará la inspección, valor numérico de 5 dígitos.
-   4. `Latitude`:  Latitud donde se realizará la inspección, valor numérico.  
-   5. `Longitude`:  Longitud donde se realizará la inspección, valor numérico.
+   4. `Latitude`:  Latitud donde se realizará la inspección, valor numérico (aprox 48.XXXX para la ciudad de Nueva York).  
+   5. `Longitude`:  Longitud donde se realizará la inspección, valor numérico (aprox -73.XXXX para la ciudad de Nueva York).
    6. `Inspection type`:  Tipo de inspección a realizarse, seleccionar alguna de las siguientes opciones:
       1. Bait
       2. Clean up
