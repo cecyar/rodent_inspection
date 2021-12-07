@@ -83,7 +83,7 @@ Para ejecutar este producto de datos se necesita lo siguiente:
    5. Estarán disponibles las siguientes tablas:
       1. `api_model`:  Contiene los registros del dataset de entrenamiento del modelo.
       2. `predicted_results`:  Contiene las predicciones realizadas.  
-4. Para salir de este producto de datos, ejecutar `Ctrl+C` en la terminal donde se está corriendo la imagen de Docker.
+4. Para salir de este producto de datos, hay que cerrar las pestañas del explorador y ejecutar `Ctrl+C` en la terminal donde se está corriendo la imagen de Docker.
 
 **Re-Entrenamiento del modelo:**
 1. Para re-entrenar el modelo es necesario ejecutar el notebook [Model_rodent.ipynb](https://github.com/cecyar/rodent_inspection/blob/main/notebooks/Model_rodent.ipynb) que se encuentra en la carpeta `notebooks` del repositorio.  Para ello, será necesario exportar la base de datos actualizada como archivo `*.csv` y colocarla en la carpeta `data` del repositorio.
