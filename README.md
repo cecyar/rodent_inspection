@@ -35,11 +35,11 @@ Para ejecutar este producto de datos se necesita lo siguiente:
 **Para levantar la imagen de docker y la base de datos:**
 1. Descargar el archivo `Rodent.csv` que está disponible en este [**Drive**](https://drive.google.com/file/d/1JCXlYAfIUP7xOGPAxS-MUKE1sNXJMWKl/view?usp=sharing), y colocarlo en la carpeta `data` del repositorio.
 2. Limpieza de datos: 
-   1. En la raíz del repositorio, ejecutar estos dos comandos:
-      1. awk -f src/utils/clean_data.awk < data/rodent.csv
-      2. sed -r '/(^|,)\s*(,|$)/d' data/rodent_reduced.csv > src/utils/Rodent_Inspection.csv
+   1. Abrir una terminal, ir a la raíz del repositorio, y ejecutar estos dos comandos:
+      1. awk -f src/clean_data.awk < data/rodent.csv
+      2. sed -r '/(^|,)\s*(,|$)/d' data/rodent_reduced.csv > data/Rodent_Inspection.csv
 3. Construir la imagen de docker:  
-   1. En la raíz del repositorio, ejecutar estos 2 comandos:
+   1. En la raíz del repositorio, ejecutar estos 2 comandos en la terminal (te pedirá la contraseña de tu usuario de tu computadora):
       1. make build
       2. make up
 4. Para visualizar la tabla generada de la base de datos:  
@@ -59,7 +59,7 @@ Para ejecutar este producto de datos se necesita lo siguiente:
          1. Host name:  db
          2. Username:  root
          3. Password:  root
-   5. Debe ser posible visualizar la tabla `api_model`, que contiene todos los registros de nuestro dataset.
+   5. Encontrarás la tabla `api_model`, que contiene todos los registros de nuestro dataset.
 
 **Entrenamiento del modelo:**
 1. Ejecutar el notebook [Model_rodent.ipynb](https://github.com/cecyar/rodent_inspection/blob/main/notebooks/Model_rodent.ipynb) en la carpeta `notebooks` del repositorio.
