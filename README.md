@@ -1,4 +1,4 @@
-![](https://lh3.googleusercontent.com/proxy/nJHMyK845YMo3gHd1CzaT-As-oV-WIxmBkvyF0d9x-OFcfwWgJHXWHODydp8VhCMAbqu1_DU6Gl5KL4g2juIW3wSGKmVdKs_rVfCDFaxK97h4Ot-dps)
+![](https://github.com/cecyar/rodent_inspection/blob/main/images/rod_insp_logo.png) ![](https://github.com/cecyar/rodent_inspection/blob/main/images/itam.png)
 
 ## Estadística Computacional (Otoño 2021)
 ## QUARANTEAM, Proyecto Final: Rodent Inspection
@@ -36,16 +36,16 @@ Para ejecutar este producto de datos se necesita lo siguiente:
 1. Descargar el archivo `Rodent.csv` que está disponible en este [**Drive**](https://drive.google.com/file/d/1JCXlYAfIUP7xOGPAxS-MUKE1sNXJMWKl/view?usp=sharing), y colocarlo en la carpeta `data` del repositorio.
 2. Limpieza de datos: 
    1. Abrir una terminal, ir a la raíz del repositorio, y ejecutar estos dos comandos:
-      1. awk -f src/clean_data.awk < data/rodent.csv
-      2. sed -r '/(^|,)\s*(,|$)/d' data/rodent_reduced.csv > data/Rodent_Inspection.csv
+      1. > `awk -f src/clean_data.awk < data/rodent.csv`
+      2. > `sed -r '/(^|,)\s*(,|$)/d' data/rodent_reduced.csv > data/Rodent_Inspection.csv`
 3. Construir la imagen de docker:  
    1. En la raíz del repositorio, ejecutar estos 2 comandos en la terminal (se necesitará ingresar la contraseña del usuario de la computadora donde se está trabajando):
-      1. make build
-      2. make up
+      1. > `make build`
+      2. > `make up`
 
 **Para acceder a los servicios del producto de datos:**
 1. Abrir el explorador de internet e ir a la siguiente dirección:
-   1. localhost:5000/main
+   1. > `localhost:5000/main`
 2. Se accede a la página principal que contiene 4 botones con las siguientes funciones:
    1. `Mostrar datos`:  Muestra la tabla disponible en la base de datos con el dataset utilizado para entrenar el modelo.  **Nota:**  Debido al tamaño del dataset usado para el entrenamiento (196,000 registros), se muestran solo 20 registros para fines ilustrativos.
    2. `Realizar predicción`:  Permite realizar una predicción, al ingresar los campos requeridos.
@@ -69,7 +69,7 @@ Para ejecutar este producto de datos se necesita lo siguiente:
    3. `Mostrar predicciones`:  Se muestran las predicciones realizadas hasta el momento.
 3. Adicionalmente, se puede visualizar y trabajar con la base de datos utilizando el servicio de `pgAdmin`, para ello, ejecutar lo siguiente:  
    1. Abrir el explorador de internet e ir a la siguiente dirección:
-      1. localhost:8000
+      1. > `localhost:8000`
    2. Después de visualizar la pantalla de bienvenida de `pgAdmin`, ingresar los siguientes datos:
          1. username:  admin@admin.com
          2. password:  admin
@@ -81,12 +81,12 @@ Para ejecutar este producto de datos se necesita lo siguiente:
          2. Username:  root
          3. Password:  root
    5. Estarán disponibles las siguientes tablas:
-      1. `api_model`:  Contiene los registros del dataset de entrenamiento del modelo.
+      1. `all_info`:  Contiene los registros del dataset de entrenamiento del modelo.
       2. `predicted_results`:  Contiene las predicciones realizadas.  
 4. Para salir de este producto de datos, hay que cerrar las pestañas del explorador y ejecutar `Ctrl+C` en la terminal donde se está corriendo la imagen de Docker.
 
 **Re-Entrenamiento del modelo:**
-1. Para re-entrenar el modelo es necesario ejecutar el notebook [Model_rodent.ipynb](https://github.com/cecyar/rodent_inspection/blob/main/notebooks/Model_rodent.ipynb) que se encuentra en la carpeta `notebooks` del repositorio.  Para ello, será necesario exportar la base de datos actualizada como archivo `*.csv` y colocarla en la carpeta `data` del repositorio.
+1. Para re-entrenar el modelo es necesario ejecutar el notebook [Model_rodent.ipynb](https://github.com/cecyar/rodent_inspection/blob/main/notebooks/Model_rodent.ipynb) que se encuentra en la carpeta `notebooks` del repositorio.  Para ello, será necesario exportar la table `all_info` actualizada como archivo `*.csv` a través de `pgAdmin` y colocarla en la carpeta `data` del repositorio.
 2. Los modelos que se generan en formato `pickle` al ejecutar el notebook, deben colocarse en la carpeta `data` del repositorio.  **Nota:**  Para ejecutar el notebook, es necesario utilizar algún ambiente virtual adicional que contenga `jupyter notebook`.  La imagen de Docker de este producto de datos no contiene `jupyter notebook`.
 
 # EDA
